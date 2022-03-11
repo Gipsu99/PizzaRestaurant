@@ -1,0 +1,4 @@
+If the person has more seniority than the number given as the parameter, then we will grant a raise of the percentage indicated
+in the parameter. If a person has an internship of more than 25 years, he or she gets a raise and an additional (parameter) PLN.
+If I give the percentage equal to 0 then an exception pops up and nothing increases.
+If a person has an internship less than the one specified in the parameter, they receive a gift of years of internship.

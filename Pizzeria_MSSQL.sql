@@ -1,0 +1,405 @@
+
+
+DROP TABLE Pizza_zamowienie
+DROP TABLE Pizza
+DROP TABLE Zamowienie
+DROP TABLE Klient
+DROP TABLE Kelner
+DROP TABLE Dostawca
+DROP TABLE Restauracja
+DROP TABLE Magazyn
+
+
+-- Created by Vertabelo (http://vertabelo.com)
+-- Last modification date: 2020-11-23 19:21:34.298
+
+-- tables
+-- Table: Dostawca
+CREATE TABLE Dostawca (
+      IdDostawcy int  NOT NULL,
+    Imie varchar(30)  NOT NULL,
+    Telefon varchar(30)  NOT NULL,
+    Zarobki int  NOT NULL,
+    Zatrudnienie datetime  NOT NULL,
+    Restauracja_IdRestauracji int  NOT NULL,
+    Staz int  NOT NULL,
+    CONSTRAINT Dostawca_pk PRIMARY KEY  (IdDostawcy)
+)
+GO
+
+-- Table: Kelner
+CREATE TABLE Kelner (
+   IdKelnera int  NOT NULL,
+    Imie varchar(30)  NOT NULL,
+    Zarobki int  NOT NULL,
+    Zatrudnienie datetime  NOT NULL,
+    Restauracja_IdRestauracji int  NOT NULL,
+    Staz int  NOT NULL,
+    CONSTRAINT Kelner_pk PRIMARY KEY  (IdKelnera)
+)
+Go
+
+-- Table: Klient
+CREATE TABLE Klient (
+    IdKlienta int  NOT NULL,
+    Imie varchar(30)  NOT NULL,
+    Telefon varchar(30)  NOT NULL,
+    Adres varchar(30)  NOT NULL,
+    CONSTRAINT Klient_pk PRIMARY KEY  (IdKlienta)
+)
+GO
+
+-- Table: Magazyn
+CREATE TABLE Magazyn (
+    IdMagazyn int  NOT NULL,
+    Adres varchar(30)  NOT NULL,
+    CONSTRAINT Magazyn_pk PRIMARY KEY  (IdMagazyn)
+)
+GO
+
+-- Table: Pizza
+CREATE TABLE Pizza (
+    IdRodzajPizzy int  NOT NULL,
+    RozmiarPizzy int  NOT NULL,
+    NazwaPizzy varchar(30)  NOT NULL,
+    CONSTRAINT Pizza_pk PRIMARY KEY  (IdRodzajPizzy)
+)
+GO
+
+-- Table: Pizza_zamowienie
+CREATE TABLE Pizza_zamowienie (
+    IdPizza_zamowienie int  NOT NULL,
+    Ilosc int  NOT NULL,
+    Cena int  NOT NULL,
+    Pizza_IdRodzajPizzy int  NOT NULL,
+    Zamowienie_IdZamowienia int  NOT NULL,
+    CONSTRAINT Pizza_zamowienie_pk PRIMARY KEY  (IdPizza_zamowienie)
+)
+GO
+
+-- Table: Restauracja
+CREATE TABLE Restauracja (
+    IdRestauracji int  NOT NULL,
+    Adres varchar(30)  NOT NULL,
+    Magazyn_IdMagazyn int  NOT NULL,
+    CONSTRAINT Restauracja_pk PRIMARY KEY  (IdRestauracji)
+)
+GO
+
+-- Table: Zamowienie
+CREATE TABLE Zamowienie (
+    IdZamowienia int  NOT NULL,
+    Kelner_IdKelnera int  NOT NULL,
+    Dostawca_IdDostawcy int  NOT NULL,
+    Klient_IdKlienta int  NOT NULL,
+    CONSTRAINT Zamowienie_pk PRIMARY KEY  (IdZamowienia)
+)
+GO
+
+-- foreign keys
+-- Reference: Dostawca_Restauracja (table: Dostawca)
+ALTER TABLE Dostawca ADD CONSTRAINT Dostawca_Restauracja
+    FOREIGN KEY (Restauracja_IdRestauracji)
+    REFERENCES Restauracja (IdRestauracji)
+GO
+
+-- Reference: Kelner_Restauracja (table: Kelner)
+ALTER TABLE Kelner ADD CONSTRAINT Kelner_Restauracja
+    FOREIGN KEY (Restauracja_IdRestauracji)
+    REFERENCES Restauracja (IdRestauracji)
+GO
+
+-- Reference: Pizza_zamowienie_Pizza (table: Pizza_zamowienie)
+ALTER TABLE Pizza_zamowienie ADD CONSTRAINT Pizza_zamowienie_Pizza
+    FOREIGN KEY (Pizza_IdRodzajPizzy)
+    REFERENCES Pizza (IdRodzajPizzy)
+GO
+
+-- Reference: Pizza_zamowienie_Zamowienie (table: Pizza_zamowienie)
+ALTER TABLE Pizza_zamowienie ADD CONSTRAINT Pizza_zamowienie_Zamowienie
+    FOREIGN KEY (Zamowienie_IdZamowienia)
+    REFERENCES Zamowienie (IdZamowienia)
+GO
+
+-- Reference: Restauracja_Magazyn (table: Restauracja)
+ALTER TABLE Restauracja ADD CONSTRAINT Restauracja_Magazyn
+    FOREIGN KEY (Magazyn_IdMagazyn)
+    REFERENCES Magazyn (IdMagazyn)
+GO
+
+-- Reference: Zamowienie_Dostawca (table: Zamowienie)
+ALTER TABLE Zamowienie ADD CONSTRAINT Zamowienie_Dostawca
+    FOREIGN KEY (Dostawca_IdDostawcy)
+    REFERENCES Dostawca (IdDostawcy)
+GO
+
+-- Reference: Zamowienie_Kelner (table: Zamowienie)
+ALTER TABLE Zamowienie ADD CONSTRAINT Zamowienie_Kelner
+    FOREIGN KEY (Kelner_IdKelnera)
+    REFERENCES Kelner (IdKelnera)
+GO
+
+-- Reference: Zamowienie_Klient (table: Zamowienie)
+ALTER TABLE Zamowienie ADD CONSTRAINT Zamowienie_Klient
+    FOREIGN KEY (Klient_IdKlienta)
+    REFERENCES Klient (IdKlienta)
+GO
+
+INSERT INTO KLIENT (IDKLIENTA, IMIE, TELEFON, ADRES) VALUES ('1', 'Jan', '930250370', 'Warszawa')
+INSERT INTO KLIENT (IDKLIENTA, IMIE, TELEFON, ADRES) VALUES ('2', 'Tomasz', '753230759', 'Warszawa')
+INSERT INTO KLIENT (IDKLIENTA, IMIE, TELEFON, ADRES) VALUES ('3', 'Stefan', '232102758', 'Warszawa')
+INSERT INTO KLIENT (IDKLIENTA, IMIE, TELEFON, ADRES) VALUES ('4', 'Piotr', '450234879', 'Warszawa')
+INSERT INTO KLIENT (IDKLIENTA, IMIE, TELEFON, ADRES) VALUES ('5', 'Andrzej', '420102753', 'Warszawa')
+INSERT INTO KLIENT (IDKLIENTA, IMIE, TELEFON, ADRES) VALUES ('6', 'Jan', '931250370', 'Warszawa')
+INSERT INTO KLIENT (IDKLIENTA, IMIE, TELEFON, ADRES) VALUES ('7', 'Tomasz', '754230759', 'Warszawa')
+INSERT INTO KLIENT (IDKLIENTA, IMIE, TELEFON, ADRES) VALUES ('8', 'Stefan', '131102758', 'Warszawa')
+INSERT INTO KLIENT (IDKLIENTA, IMIE, TELEFON, ADRES) VALUES ('9', 'Mateusz', '354234879', 'Warszawa')
+INSERT INTO KLIENT (IDKLIENTA, IMIE, TELEFON, ADRES) VALUES ('10', 'Dominik', '225102753', 'Warszawa')
+INSERT INTO KLIENT (IDKLIENTA, IMIE, TELEFON, ADRES) VALUES ('11', 'Krzysztof', '135250370', 'Poznań')
+INSERT INTO KLIENT (IDKLIENTA, IMIE, TELEFON, ADRES) VALUES ('12', 'Tomasz', '953230759', 'Opole')
+INSERT INTO KLIENT (IDKLIENTA, IMIE, TELEFON, ADRES) VALUES ('13', 'Maciej', '832102758', 'Zakopane')
+INSERT INTO KLIENT (IDKLIENTA, IMIE, TELEFON, ADRES) VALUES ('14', 'Andrzej', '550234879', 'Zakopane')
+INSERT INTO KLIENT (IDKLIENTA, IMIE, TELEFON, ADRES) VALUES ('15', 'Piotr', '620102753', 'Poznań')
+INSERT INTO KLIENT (IDKLIENTA, IMIE, TELEFON, ADRES) VALUES ('16', 'Jan', '730250370', 'Opole')
+INSERT INTO KLIENT (IDKLIENTA, IMIE, TELEFON, ADRES) VALUES ('17', 'Tomasz', '153230759', 'Opole')
+INSERT INTO KLIENT (IDKLIENTA, IMIE, TELEFON, ADRES) VALUES ('18', 'Roman', '832102758', 'Zakopane')
+INSERT INTO KLIENT (IDKLIENTA, IMIE, TELEFON, ADRES) VALUES ('19', 'Michal', '550234879', 'Opole')
+INSERT INTO KLIENT (IDKLIENTA, IMIE, TELEFON, ADRES) VALUES ('20', 'Andrzej', '320102753', 'Warszawa')
+GO
+
+INSERT INTO PIZZA (idrodzajpizzy, rozmiarpizzy, nazwapizzy) VALUES ('1', '30', 'Margharita')
+INSERT INTO PIZZA (idrodzajpizzy, rozmiarpizzy, nazwapizzy) VALUES ('2', '50', 'Margharita')
+INSERT INTO PIZZA (idrodzajpizzy, rozmiarpizzy, nazwapizzy) VALUES ('3', '30', 'Capriciosa')
+INSERT INTO PIZZA (idrodzajpizzy, rozmiarpizzy, nazwapizzy) VALUES ('4', '50', 'Capriciosa')
+INSERT INTO PIZZA (idrodzajpizzy, rozmiarpizzy, nazwapizzy) VALUES ('5', '30', 'CzterySery')
+INSERT INTO PIZZA (idrodzajpizzy, rozmiarpizzy, nazwapizzy) VALUES ('6', '50', 'CzterySery')
+INSERT INTO PIZZA (idrodzajpizzy, rozmiarpizzy, nazwapizzy) VALUES ('7', '30', 'Pepperoni')
+INSERT INTO PIZZA (idrodzajpizzy, rozmiarpizzy, nazwapizzy) VALUES ('8', '50', 'Pepperoni')
+INSERT INTO PIZZA (idrodzajpizzy, rozmiarpizzy, nazwapizzy) VALUES ('9', '30', 'Kebab')
+INSERT INTO PIZZA (idrodzajpizzy, rozmiarpizzy, nazwapizzy) VALUES ('10', '50', 'Kebab')
+GO
+
+INSERT INTO MAGAZYN (idmagazyn, adres) VALUES ('1', 'Zakopane')
+INSERT INTO MAGAZYN (idmagazyn, adres) VALUES ('2', 'Opole')
+INSERT INTO MAGAZYN (idmagazyn, adres) VALUES ('3', 'Warszawa')
+INSERT INTO MAGAZYN (idmagazyn, adres) VALUES ('4', 'Warszawa')
+INSERT INTO MAGAZYN (idmagazyn, adres) VALUES ('5', 'Poznań')
+GO
+
+INSERT INTO RESTAURACJA(IDRESTAURACJI, ADRES, MAGAZYN_IDMAGAZYN)VALUES ('1', 'Warszawa', '1')
+INSERT INTO RESTAURACJA(IDRESTAURACJI, ADRES, MAGAZYN_IDMAGAZYN)VALUES ('2', 'Warszawa', '2')
+INSERT INTO RESTAURACJA(IDRESTAURACJI, ADRES, MAGAZYN_IDMAGAZYN)VALUES ('3', 'Warszawa', '3')
+INSERT INTO RESTAURACJA(IDRESTAURACJI, ADRES, MAGAZYN_IDMAGAZYN)VALUES ('4', 'Warszawa', '4')
+INSERT INTO RESTAURACJA(IDRESTAURACJI, ADRES, MAGAZYN_IDMAGAZYN)VALUES ('5', 'Poznań', '5')
+INSERT INTO RESTAURACJA(IDRESTAURACJI, ADRES, MAGAZYN_IDMAGAZYN)VALUES ('6', 'Warszawa', '1')
+INSERT INTO RESTAURACJA(IDRESTAURACJI, ADRES, MAGAZYN_IDMAGAZYN)VALUES ('7', 'Poznań', '2')
+INSERT INTO RESTAURACJA(IDRESTAURACJI, ADRES, MAGAZYN_IDMAGAZYN)VALUES ('8', 'Opole', '3')
+INSERT INTO RESTAURACJA(IDRESTAURACJI, ADRES, MAGAZYN_IDMAGAZYN)VALUES ('9', 'Siedlce', '4')
+INSERT INTO RESTAURACJA(IDRESTAURACJI, ADRES, MAGAZYN_IDMAGAZYN)VALUES ('10', 'Warszawa', '5')
+GO
+
+INSERT INTO DOSTAWCA(IDDOSTAWCY, IMIE, TELEFON, RESTAURACJA_IDRESTAURACJI, ZAROBKI, ZATRUDNIENIE, STAZ)VALUES ('1','Tomasz','292390215','3', '1600', '2019-03-04', year('2020')-year('2019-03-04'))
+INSERT INTO DOSTAWCA(IDDOSTAWCY, IMIE, TELEFON, RESTAURACJA_IDRESTAURACJI, ZAROBKI, ZATRUDNIENIE, STAZ)VALUES ('2','Jan','293358230','3', '1700', '2012-12-12', year('2020')-year('2012-12-12'))
+INSERT INTO DOSTAWCA(IDDOSTAWCY, IMIE, TELEFON, RESTAURACJA_IDRESTAURACJI, ZAROBKI, ZATRUDNIENIE, STAZ)VALUES ('3','Krzysztof','767234456','7', '1500', '2010-03-03', year('2020')-year('2010-03-03'))
+INSERT INTO DOSTAWCA(IDDOSTAWCY, IMIE, TELEFON, RESTAURACJA_IDRESTAURACJI, ZAROBKI, ZATRUDNIENIE, STAZ)VALUES ('4','Piotr','208308680','7', '1800', '2009-03-03', year('2020')-year('2009-03-03'))
+INSERT INTO DOSTAWCA(IDDOSTAWCY, IMIE, TELEFON, RESTAURACJA_IDRESTAURACJI, ZAROBKI, ZATRUDNIENIE, STAZ)VALUES ('5','Stefan','200300145','2', '2100', '2008-04-04', year('2020')-year('2008-04-04'))
+INSERT INTO DOSTAWCA(IDDOSTAWCY, IMIE, TELEFON, RESTAURACJA_IDRESTAURACJI, ZAROBKI, ZATRUDNIENIE, STAZ)VALUES ('6','Andrzej','200300400','2', '2000', '2002-04-05', year('2020')-year('2002-04-05'))
+INSERT INTO DOSTAWCA(IDDOSTAWCY, IMIE, TELEFON, RESTAURACJA_IDRESTAURACJI, ZAROBKI, ZATRUDNIENIE, STAZ)VALUES ('7','Michal','520456789','4', '1500', '2003-10-10', year('2020')-year('2003-10-10'))
+INSERT INTO DOSTAWCA(IDDOSTAWCY, IMIE, TELEFON, RESTAURACJA_IDRESTAURACJI, ZAROBKI, ZATRUDNIENIE, STAZ)VALUES ('8','Kacper','386596900','4', '1900', '2004-10-12', year('2020')-year('2004-10-12'))
+INSERT INTO DOSTAWCA(IDDOSTAWCY, IMIE, TELEFON, RESTAURACJA_IDRESTAURACJI, ZAROBKI, ZATRUDNIENIE, STAZ)VALUES ('9','Mateusz','290456654','6', '2500', '2005-12-03', year('2020')-year('2005-12-03'))
+INSERT INTO DOSTAWCA(IDDOSTAWCY, IMIE, TELEFON, RESTAURACJA_IDRESTAURACJI, ZAROBKI, ZATRUDNIENIE, STAZ)VALUES ('10','Piotr','291200302','6', '2100', '2006-12-05', year('2020')-year('2006-12-05'))
+INSERT INTO DOSTAWCA(IDDOSTAWCY, IMIE, TELEFON, RESTAURACJA_IDRESTAURACJI, ZAROBKI, ZATRUDNIENIE, STAZ)VALUES ('11','Tomasz','530210300','8', '2400', '2006-12-05', year('2020')-year('2006-12-05'))
+INSERT INTO DOSTAWCA(IDDOSTAWCY, IMIE, TELEFON, RESTAURACJA_IDRESTAURACJI, ZAROBKI, ZATRUDNIENIE, STAZ)VALUES ('12','Pawel','868796000','8', '2300', '2007-03-03', year('2020')-year('2007-03-03'))
+INSERT INTO DOSTAWCA(IDDOSTAWCY, IMIE, TELEFON, RESTAURACJA_IDRESTAURACJI, ZAROBKI, ZATRUDNIENIE, STAZ)VALUES ('13','Roman','292300123','1', '2200', '2008-04-05', year('2020')-year('2008-04-05'))
+INSERT INTO DOSTAWCA(IDDOSTAWCY, IMIE, TELEFON, RESTAURACJA_IDRESTAURACJI, ZAROBKI, ZATRUDNIENIE, STAZ)VALUES ('14','Andrzej','153542809','1', '2000', '2009-10-10', year('2020')-year('2009-10-10'))
+INSERT INTO DOSTAWCA(IDDOSTAWCY, IMIE, TELEFON, RESTAURACJA_IDRESTAURACJI, ZAROBKI, ZATRUDNIENIE, STAZ)VALUES ('15','Jan','105372806','5', '1400', '2005-12-05', year('2020')-year('2005-12-05'))
+INSERT INTO DOSTAWCA(IDDOSTAWCY, IMIE, TELEFON, RESTAURACJA_IDRESTAURACJI, ZAROBKI, ZATRUDNIENIE, STAZ)VALUES ('16','Piotr','300456789','5', '1900', '2007-12-03', year('2020')-year('2007-12-03'))
+INSERT INTO DOSTAWCA(IDDOSTAWCY, IMIE, TELEFON, RESTAURACJA_IDRESTAURACJI, ZAROBKI, ZATRUDNIENIE, STAZ)VALUES ('17','Tadeusz','752809650','9', '1600', '2003-12-04', year('2020')-year('2003-12-04'))
+INSERT INTO DOSTAWCA(IDDOSTAWCY, IMIE, TELEFON, RESTAURACJA_IDRESTAURACJI, ZAROBKI, ZATRUDNIENIE, STAZ)VALUES ('18','Tomasz','212416300','9', '1500','2004-10-10', year('2020')-year('2004-10-10'))
+INSERT INTO DOSTAWCA(IDDOSTAWCY, IMIE, TELEFON, RESTAURACJA_IDRESTAURACJI, ZAROBKI, ZATRUDNIENIE, STAZ)VALUES ('19','Bartosz','245608709','10', '1800', '2000-10-10', year('2020')-year('2000-10-10'))
+INSERT INTO DOSTAWCA(IDDOSTAWCY, IMIE, TELEFON, RESTAURACJA_IDRESTAURACJI, ZAROBKI, ZATRUDNIENIE, STAZ)VALUES ('20','Mateusz','212415782','10', '1700', '1991-10-10', year('2020')-year('1991-10-10'))
+GO
+
+INSERT INTO KELNER (IDKELNERA, IMIE, RESTAURACJA_IDRESTAURACJI, ZAROBKI, ZATRUDNIENIE, STAZ) VALUES ('1','Tomasz','3', '1600', '2010-05-04', year('2020')-year('2010-05-04'))
+INSERT INTO KELNER (IDKELNERA, IMIE, RESTAURACJA_IDRESTAURACJI, ZAROBKI, ZATRUDNIENIE, STAZ) VALUES ('2','Andrzej','3', '1500', '2009-04-04', year('2020')-year('2009-04-04'))
+INSERT INTO KELNER (IDKELNERA, IMIE, RESTAURACJA_IDRESTAURACJI, ZAROBKI, ZATRUDNIENIE, STAZ) VALUES ('3','Piotr','5', '2000', '2008-04-04', year('2020')-year('2008-04-04'))
+INSERT INTO KELNER (IDKELNERA, IMIE, RESTAURACJA_IDRESTAURACJI, ZAROBKI, ZATRUDNIENIE, STAZ) VALUES ('4','Kacper','5', '2200', '2007-04-04', year('2020')-year('2007-04-04'))
+INSERT INTO KELNER (IDKELNERA, IMIE, RESTAURACJA_IDRESTAURACJI, ZAROBKI, ZATRUDNIENIE, STAZ) VALUES ('5','Krzysztof','4', '2100', '2000-03-03', year('2020')-year('2000-03-03'))
+INSERT INTO KELNER (IDKELNERA, IMIE, RESTAURACJA_IDRESTAURACJI, ZAROBKI, ZATRUDNIENIE, STAZ) VALUES ('6','Tomasz','4', '2200', '2001-12-12', year('2020')-year('2001-12-12'))
+INSERT INTO KELNER (IDKELNERA, IMIE, RESTAURACJA_IDRESTAURACJI, ZAROBKI, ZATRUDNIENIE, STAZ) VALUES ('7','Piotr','1', '1700', '2000-12-12', year('2020')-year('2000-12-12'))
+INSERT INTO KELNER (IDKELNERA, IMIE, RESTAURACJA_IDRESTAURACJI, ZAROBKI, ZATRUDNIENIE, STAZ) VALUES ('8','Andrzej','1', '1300', '2018-07-12', year('2020')-year('2018-07-12'))
+INSERT INTO KELNER (IDKELNERA, IMIE, RESTAURACJA_IDRESTAURACJI, ZAROBKI, ZATRUDNIENIE, STAZ) VALUES ('9','Tomasz','2', '1800', '2019-04-05', year('2020')-year('2019-04-05'))
+INSERT INTO KELNER (IDKELNERA, IMIE, RESTAURACJA_IDRESTAURACJI, ZAROBKI, ZATRUDNIENIE, STAZ) VALUES ('10','Stefan','2', '1400', '2020-03-03', year('2020')-year('2020-03-03'))
+INSERT INTO KELNER (IDKELNERA, IMIE, RESTAURACJA_IDRESTAURACJI, ZAROBKI, ZATRUDNIENIE, STAZ) VALUES ('11','Jan','6', '1800', '2006-12-12', year('2020')-year('2006-12-12'))
+INSERT INTO KELNER (IDKELNERA, IMIE, RESTAURACJA_IDRESTAURACJI, ZAROBKI, ZATRUDNIENIE, STAZ) VALUES ('12','Mariusz','6', '1500', '2016-08-12', year('2020')-year('2016-08-12'))
+INSERT INTO KELNER (IDKELNERA, IMIE, RESTAURACJA_IDRESTAURACJI, ZAROBKI, ZATRUDNIENIE, STAZ) VALUES ('13','Dariusz','8', '1800', '2015-04-04', year('2020')-year('2015-04-04'))
+INSERT INTO KELNER (IDKELNERA, IMIE, RESTAURACJA_IDRESTAURACJI, ZAROBKI, ZATRUDNIENIE, STAZ) VALUES ('14','Krzysztof','8', '1900', '2004-05-05', year('2020')-year('2004-05-05'))
+INSERT INTO KELNER (IDKELNERA, IMIE, RESTAURACJA_IDRESTAURACJI, ZAROBKI, ZATRUDNIENIE, STAZ) VALUES ('15','Andrzej','10', '2400', '2003-05-05', year('2020')-year('2003-05-05'))
+INSERT INTO KELNER (IDKELNERA, IMIE, RESTAURACJA_IDRESTAURACJI, ZAROBKI, ZATRUDNIENIE, STAZ) VALUES ('16','Jan','10', '2300','2002-04-04', year('2020')-year('2002-04-04'))
+INSERT INTO KELNER (IDKELNERA, IMIE, RESTAURACJA_IDRESTAURACJI, ZAROBKI, ZATRUDNIENIE, STAZ) VALUES ('17','Tomasz','7', '2200', '2001-03-03', year('2020')-year('2001-03-03'))
+INSERT INTO KELNER (IDKELNERA, IMIE, RESTAURACJA_IDRESTAURACJI, ZAROBKI, ZATRUDNIENIE, STAZ) VALUES ('18','Marek','7', '2100', '2000-12-12', year('2020')-year('2000-12-12'))
+INSERT INTO KELNER (IDKELNERA, IMIE, RESTAURACJA_IDRESTAURACJI, ZAROBKI, ZATRUDNIENIE, STAZ) VALUES ('19','Tadeusz','9', '2000', '1990-12-12', year('2020')-year('1990-12-12'))
+INSERT INTO KELNER (IDKELNERA, IMIE, RESTAURACJA_IDRESTAURACJI, ZAROBKI, ZATRUDNIENIE, STAZ) VALUES ('20','Michal','9', '2100', '1991-10-10', year('2020')-year('1991-10-10'))
+GO
+
+INSERT INTO ZAMOWIENIE(IDZAMOWIENIA, KELNER_IDKELNERA,DOSTAWCA_IDDOSTAWCY,KLIENT_IDKLIENTA) VALUES ('1','1','1','1')
+INSERT INTO ZAMOWIENIE(IDZAMOWIENIA, KELNER_IDKELNERA,DOSTAWCA_IDDOSTAWCY,KLIENT_IDKLIENTA) VALUES ('2','2','2','2')
+INSERT INTO ZAMOWIENIE(IDZAMOWIENIA, KELNER_IDKELNERA,DOSTAWCA_IDDOSTAWCY,KLIENT_IDKLIENTA) VALUES ('3','3','3','3')
+INSERT INTO ZAMOWIENIE(IDZAMOWIENIA, KELNER_IDKELNERA,DOSTAWCA_IDDOSTAWCY,KLIENT_IDKLIENTA) VALUES ('4','4','4','4')
+INSERT INTO ZAMOWIENIE(IDZAMOWIENIA, KELNER_IDKELNERA,DOSTAWCA_IDDOSTAWCY,KLIENT_IDKLIENTA) VALUES ('5','5','5','5')
+GO
+
+INSERT INTO PIZZA_ZAMOWIENIE (IDPIZZA_ZAMOWIENIE, PIZZA_IDRODZAJPIZZY, ZAMOWIENIE_IDZAMOWIENIA, ILOSC, CENA) VALUES ('1','1','1','1','25')
+INSERT INTO PIZZA_ZAMOWIENIE (IDPIZZA_ZAMOWIENIE, PIZZA_IDRODZAJPIZZY, ZAMOWIENIE_IDZAMOWIENIA, ILOSC, CENA) VALUES ('2','2','2','1','40')
+INSERT INTO PIZZA_ZAMOWIENIE (IDPIZZA_ZAMOWIENIE, PIZZA_IDRODZAJPIZZY, ZAMOWIENIE_IDZAMOWIENIA, ILOSC, CENA) VALUES ('3','3','3','1','25')
+INSERT INTO PIZZA_ZAMOWIENIE (IDPIZZA_ZAMOWIENIE, PIZZA_IDRODZAJPIZZY, ZAMOWIENIE_IDZAMOWIENIA, ILOSC, CENA) VALUES ('4','4','4','1','40')
+INSERT INTO PIZZA_ZAMOWIENIE (IDPIZZA_ZAMOWIENIE, PIZZA_IDRODZAJPIZZY, ZAMOWIENIE_IDZAMOWIENIA, ILOSC, CENA) VALUES ('5','5','5','1','25')
+GO
+
+
+--PROCEDURA
+
+USE [2019SBD]
+GO
+/****** Object:  StoredProcedure [s20325].[zad2]    Script Date: 29.11.2020 12:01:46 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+-- =============================================
+-- Author:		<Author,,Name>
+-- Create date: <Create Date,,>
+-- Description:	<Description,,>
+-- =============================================
+Create PROCEDURE [s20325].[procedura]
+	-- Add the parameters for the stored procedure here
+	@stazpracy INT,
+	@procent INT,
+	@bonus INT
+	
+	
+AS
+BEGIN
+
+	-- SET NOCOUNT ON added to prevent extra result sets from
+	-- interfering with SELECT statements.
+	SET NOCOUNT ON;
+
+    DECLARE cur CURSOR FOR
+	SELECT idkelnera, zarobki, staz
+	FROM kelner;
+DECLARE @idkelnera INT, @zarobki MONEY, @staz INT;
+
+OPEN cur;
+FETCH NEXT FROM cur INTO @idkelnera, @zarobki, @staz;
+
+WHILE @@FETCH_STATUS = 0
+	BEGIN
+		
+			BEGIN TRY
+			IF @procent = 0
+				BEGIN
+					
+						Raiserror('procent nie może być równy 0',1,15)
+						END
+			ELSE 	IF @staz > @stazpracy
+			BEGIN
+				SET @zarobki = @zarobki * (@procent*0.01+1);
+				UPDATE kelner SET zarobki = @zarobki WHERE idkelnera = @idkelnera;
+				PRINT Cast(@idkelnera As Varchar) + ' zarabia po podwyżce ' + Cast(@zarobki As Varchar);
+			END;
+		ELSE IF @staz < @stazpracy
+			BEGIN
+				SET @zarobki = @zarobki + @staz;
+				UPDATE kelner SET zarobki = @zarobki WHERE idkelnera = @idkelnera;
+				PRINT Cast(@idkelnera As Varchar) + ' zarabia po podwyżce ' + Cast(@zarobki As Varchar);
+			END;
+		  IF @staz >= 25 AND @procent != 0
+			BEGIN
+				SET @zarobki = @zarobki  + @bonus;
+				UPDATE kelner SET zarobki = @zarobki WHERE idkelnera = @idkelnera;
+				PRINT Cast(@idkelnera As Varchar) + ' zarabia po podwyżce ' + Cast(@zarobki As Varchar);
+			END;			
+			END TRY
+			BEGIN CATCH
+			DECLARE @ErrMSG NVARCHAR(100)
+			SELECT @ErrMSG = ERROR_MESSAGE();
+			Raiserror(@ErrMSG,15,1);
+			END CATCH
+			
+		
+			FETCH NEXT FROM cur INTO @idkelnera, @zarobki, @staz;
+	END;
+
+CLOSE cur;
+DEALLOCATE cur;
+END
+
+--Wywolanie procedury
+-- EXECUTE procedura 19, 10, 500
+--EXECUTE procedura 19, 0, 500
+--SELECT * FROM kelner;
+
+--TRIGGER
+
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+-- =============================================
+-- Author:		<Author,,Name>
+-- Create date: <Create Date,,>
+-- Description:	<Description,,>
+-- =============================================
+CREATE TRIGGER [s20325].[trig] ON [s20325].[Kelner]
+  
+   AFTER INSERT, DELETE
+AS 
+BEGIN
+
+	SET NOCOUNT ON;
+	IF EXISTS (SELECT 1 
+				FROM inserted i LEFT JOIN deleted d ON i.idkelnera=d.idkelnera 
+				WHERE d.idkelnera IS NULL AND EXISTS (SELECT 1  FROM kelner k 
+				
+													WHERE i.Zarobki > 2000 AND k.idkelnera<> i.idkelnera)) 
+												
+													
+		BEGIN
+			RAISERROR ('Nie może zarabiać powyżej 2000!', 15, 1);
+			ROLLBACK;
+		END
+		IF EXISTS (SELECT 1 
+				FROM inserted i LEFT JOIN deleted d ON i.idkelnera=d.idkelnera 
+				WHERE d.idkelnera IS NULL AND EXISTS (SELECT 1  FROM kelner k 
+				
+													WHERE i.Staz != 0 AND k.idkelnera<> i.idkelnera)) 
+												
+													
+		BEGIN
+		
+			RAISERROR ('kelner nie może mieć staż innego niż 0 na początek pracy!', 15, 1);
+			ROLLBACK;
+		END
+   
+
+END
+
+--Wywolanie procedury
+ EXECUTE procedura 19, 0, 500
+SELECT * FROM kelner;
+--Przyklad dzialania TRIGERRA
+ INSERT INTO KLIENT (IDKLIENTA, IMIE, TELEFON, ADRES) VALUES ('21', 'Jan', '940250370', 'Warszawa')
+ SELECT * FROM klient;
+
+
+--Przyklad dzialania TRIGERRA
+--zadziala
+--INSERT INTO KELNER (IDKELNERA, IMIE, RESTAURACJA_IDRESTAURACJI, ZAROBKI, ZATRUDNIENIE, STAZ) VALUES ('21','Tomasz','3', '1900', '1990-05-04', year('2020')-year('2020-05-04'))
+--nie zadziala
+--INSERT INTO KELNER (IDKELNERA, IMIE, RESTAURACJA_IDRESTAURACJI, ZAROBKI, ZATRUDNIENIE, STAZ) VALUES ('22','Tomasz','3', '2001', '1990-05-04', year('2020')-year('2020-05-04'))
+--nie zadziala
+--INSERT INTO KELNER (IDKELNERA, IMIE, RESTAURACJA_IDRESTAURACJI, ZAROBKI, ZATRUDNIENIE, STAZ) VALUES ('23','Tomasz','3', '1900', '1990-05-04', year('2020')-year('1990-05-04'))
+
+ SELECT * FROM kelner;
+-- End of file.

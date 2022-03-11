@@ -1,0 +1,1 @@
+a trigger that will not allow you to add a waiter whose earnings will be greater than 2000, and his seniority at the beginning of work cannot be other than 0.
